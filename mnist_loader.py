@@ -1,16 +1,34 @@
 #for loading data 
 import numpy as np
 import gzip
-import _pickle as cPickle
+import pickle as cPickle
 
 
 
 def load_data():
-    
-    f = gzip.open('mnist.pkl.gz', 'rb')
-    training_data, validation_data, test_data = cPickle.load(f)
-    f.close()
-    return (training_data, validation_data, test_data)
+
+
+
+
+
+
+    with gzip.open('mnist.pkl.gz', 'rb') as f:
+        data = cPickle._Unpickler(f)
+        data.encoding = 'latin1'  # set encoding
+        train, valid, test = data.load()
+    return(train,valid,test)
+
+        
+""" 
+f = gzip.open('mnist.pkl.gz', 'rb')
+training_data, validation_data, test_data = pickle.load(f, encoding="latin1")
+f.close()
+"""
+"""   with gzip.open('mnist.pkl.gz','rb') as ff :
+    u = cPickle._Unpickler( ff )
+    u.encoding = 'latin1'
+    train, val, test = u.load()
+return (train,val,test) """
 
 def load_data_wrapper():
     
